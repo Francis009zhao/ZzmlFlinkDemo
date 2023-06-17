@@ -1,7 +1,13 @@
 package com.zzml.flinklearn.works.json;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * @CopyRigth: com.zzml.flink
@@ -27,6 +33,15 @@ public class JsonAndBean {
         String str = "{\"name\":\"FlinkAI\",\"age\":18}";
         jsonToBean(str);
 
+        String str2 = "[{\"name\":\"FlinkAI\",\"age\":18}]";
+        JsonAndBean jsonAndBean = new JsonAndBean();
+        jsonAndBean.jsonToList(str2);
+
+        jsonListToJsonArray();
+
+        listToJsonArray();
+
+        mapToJson();
     }
 
     /**
@@ -68,5 +83,95 @@ public class JsonAndBean {
         System.out.println(jsonObject);
 
     }
+
+    /**
+     * json字符串转List
+     */
+    public void jsonToList(String str){
+
+        List<Map> mapList = JSONArray.parseArray(str, Map.class);
+
+        mapList.forEach(System.out::println);
+    }
+
+    /**
+     * json 数组字符串转成jsonArray
+     */
+    public static void jsonListToJsonArray(){
+
+        /**
+         * 方法一：JSONArray.parseArray直接解析list格式的String字符串
+         */
+        String jsonList = "[{\"name\":\"FlinkAI\",\"age\":18}]";
+
+        JSONArray parseArray = JSONArray.parseArray(jsonList);
+        System.out.println(parseArray.toString());
+
+        /**
+         * 方法二：1.创建JSONArray对象，并往里面添加元素即可；
+         *       2.JSONArray.toJSONString， 最终输出是String类型。
+         */
+        JSONArray jsonArray = new JSONArray();
+        StudentBean studentBean = new StudentBean();
+        studentBean.setName("flink");
+        studentBean.setAddress("杭州市");
+        studentBean.setAge("12");
+
+        // 将bean对象添加到jsonArray中
+        jsonArray.add(studentBean);
+
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("Kafka", 3);
+
+        jsonArray.add(jsonObject);
+
+        String jsonString = JSONArray.toJSONString(jsonArray);
+
+        System.out.println(jsonArray.getString(0));
+
+        System.out.println(jsonString);
+
+    }
+
+    /**
+     * List类型转成JsonArray
+     */
+    public static void listToJsonArray(){
+
+        StudentBean studentBean = new StudentBean();
+        List<StudentBean> list = new ArrayList<>();
+        studentBean.setName("Flink");
+        studentBean.setAge("13");
+        studentBean.setAddress("杭州市");
+
+        list.add(studentBean);
+
+        String listJson = JSON.toJSONString(list);
+
+//        JSONObject jsonObject = JSON.parseObject(listJson);
+
+//        System.out.println(jsonObject.getString("name"));
+//        System.out.println(jsonObject);
+        System.out.println(listJson);
+
+    }
+
+    /**
+     * Map 转成json
+     */
+    public static void mapToJson(){
+
+        HashMap<String, String> maps = new HashMap<>();
+        maps.put("tec", "FLink");
+        maps.put("age", "15");
+        maps.put("address", "杭州");
+
+        String mapJson = JSON.toJSONString(maps);
+        System.out.println(mapJson);
+
+    }
+
+
+
 
 }
