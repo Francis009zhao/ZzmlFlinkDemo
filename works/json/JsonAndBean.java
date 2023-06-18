@@ -42,6 +42,9 @@ public class JsonAndBean {
         listToJsonArray();
 
         mapToJson();
+
+        System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>");
+        jsonToMap();
     }
 
     /**
@@ -168,6 +171,27 @@ public class JsonAndBean {
 
         String mapJson = JSON.toJSONString(maps);
         System.out.println(mapJson);
+
+        System.out.println("maps>>>" + maps);
+
+    }
+
+    /**
+     * jsonObject转成map
+     */
+    public static void jsonToMap(){
+
+        StudentBean studentBean = new StudentBean();
+        studentBean.setName("jsonToMap");
+        studentBean.setAddress("深圳");
+
+        String stuStr = JSONObject.toJSONString(studentBean);
+
+        Map mapJson = JSONObject.parseObject(stuStr, Map.class);
+
+        System.out.println(mapJson);
+
+        System.out.println(mapJson.get("name"));
 
     }
 

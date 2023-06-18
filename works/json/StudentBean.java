@@ -1,6 +1,8 @@
 package com.zzml.flinklearn.works.json;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 /**
  * @CopyRigth: com.zzml.flink
@@ -12,6 +14,8 @@ import lombok.Data;
  * @ModifyDate:
  */
 @Data
+//@AllArgsConstructor
+//@NoArgsConstructor
 public class StudentBean {
 
     private String name;
